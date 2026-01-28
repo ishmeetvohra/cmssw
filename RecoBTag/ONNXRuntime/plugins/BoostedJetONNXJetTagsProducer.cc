@@ -139,7 +139,7 @@ void BoostedJetONNXJetTagsProducer::fillDescriptions(edm::ConfigurationDescripti
                                      });
   desc.add<edm::InputTag>("jets", edm::InputTag(""));
   desc.addOptionalUntracked<bool>("produceValueMap", false);
-  desc.addOptionalUntracked<bool>("debugMode", false);
+  desc.addOptionalUntracked<bool>("debugMode", true);
 
   descriptions.addWithDefaultLabel(desc);
 }
@@ -180,6 +180,9 @@ void BoostedJetONNXJetTagsProducer::produce(edm::Event &iEvent, const edm::Event
       // convert inputs
       make_inputs(taginfo);
       // run prediction and get outputs
+      //for (unsigned igroup = 0; igroup < input_names_.size(); ++igroup) {
+      //  std::cout<<input_names_[igroup]<<" size "<<data_[igroup].size()<<" shape "<<input_shapes_[igroup][1]<<" "<<input_shapes_[igroup][2]<<std::endl;
+      //}
       outputs = globalCache()->run(input_names_, data_, input_shapes_)[0];
       assert(outputs.size() == flav_names_.size());
     }
